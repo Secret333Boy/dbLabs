@@ -11,14 +11,26 @@ CREATE TABLE theatre.director (
 CREATE TABLE theatre.repertoire (
   month VARCHAR (50) PRIMARY KEY NOT NULL UNIQUE,
   director_id BIGINT NOT NULL,
-  FOREIGN KEY (director_id) REFERENCES theatre.director
+  FOREIGN KEY (director_id) REFERENCES theatre.director,
+  CONSTRAINT month_valid CHECK (month IN (
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ))
 );
 CREATE TABLE theatre.genre (
   name VARCHAR (50) PRIMARY KEY NOT NULL UNIQUE
 );
-CREATE TABLE theatre.author (
-  id BIGSERIAL PRIMARY KEY NOT NULL UNIQUE
-) INHERITS (theatre.employee);
+CREATE TABLE theatre.author (id BIGSERIAL PRIMARY KEY NOT NULL UNIQUE) INHERITS (theatre.employee);
 CREATE TABLE theatre.producer (
   id BIGSERIAL PRIMARY KEY NOT NULL UNIQUE,
   categorie VARCHAR (50) NOT NULL

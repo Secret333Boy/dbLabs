@@ -21,7 +21,7 @@ VALUES
 INSERT INTO
   theatre.genre (name)
 VALUES
-  ('comedy');
+  ('comedy'), ('trategy');
 INSERT INTO
   theatre.author (first_name, last_name, date_of_birth)
 VALUES
