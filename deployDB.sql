@@ -1,11 +1,13 @@
 CREATE SCHEMA theatre;
-CREATE TABLE theatre.director (
-  id BIGSERIAL PRIMARY KEY NOT NULL UNIQUE,
+CREATE TABLE theatre.employee (
   first_name VARCHAR (20) NOT NULL,
   last_name VARCHAR (50) NOT NULL,
-  date_of_birth DATE NOT NULL,
-  phone VARCHAR (50)
+  date_of_birth DATE NOT NULL
 );
+CREATE TABLE theatre.director (
+  id BIGSERIAL PRIMARY KEY NOT NULL UNIQUE,
+  phone VARCHAR (50)
+) INHERITS (theatre.employee);
 CREATE TABLE theatre.repertoire (
   month VARCHAR (50) PRIMARY KEY NOT NULL UNIQUE,
   director_id BIGINT NOT NULL,
@@ -15,25 +17,16 @@ CREATE TABLE theatre.genre (
   name VARCHAR (50) PRIMARY KEY NOT NULL UNIQUE
 );
 CREATE TABLE theatre.author (
-  id BIGSERIAL PRIMARY KEY NOT NULL UNIQUE,
-  first_name VARCHAR (20) NOT NULL,
-  last_name VARCHAR (50) NOT NULL,
-  date_of_birth DATE NOT NULL
-);
+  id BIGSERIAL PRIMARY KEY NOT NULL UNIQUE
+) INHERITS (theatre.employee);
 CREATE TABLE theatre.producer (
   id BIGSERIAL PRIMARY KEY NOT NULL UNIQUE,
-  first_name VARCHAR (20) NOT NULL,
-  last_name VARCHAR (50) NOT NULL,
-  date_of_birth DATE NOT NULL,
   categorie VARCHAR (50) NOT NULL
-);
+) INHERITS (theatre.employee);
 CREATE TABLE theatre.musician (
   id BIGSERIAL PRIMARY KEY NOT NULL UNIQUE,
-  first_name VARCHAR (20) NOT NULL,
-  last_name VARCHAR (50) NOT NULL,
-  date_of_birth DATE NOT NULL,
   instrument VARCHAR (50)
-);
+) INHERITS (theatre.employee);
 CREATE TABLE theatre.performance (
   id BIGSERIAL PRIMARY KEY NOT NULL UNIQUE,
   timestamp TIMESTAMP WITH TIME ZONE,
@@ -59,11 +52,8 @@ CREATE TABLE theatre.performance (
 );
 CREATE TABLE theatre.actor (
   id BIGSERIAL PRIMARY KEY NOT NULL UNIQUE,
-  first_name VARCHAR (20) NOT NULL,
-  last_name VARCHAR (50) NOT NULL,
-  date_of_birth DATE NOT NULL,
   is_a_student BOOLEAN DEFAULT false
-);
+) INHERITS (theatre.employee);
 CREATE TABLE theatre.student (
   grade_book_number BIGINT PRIMARY KEY NOT NULL UNIQUE,
   actor_id BIGINT NOT NULL UNIQUE,
@@ -83,12 +73,9 @@ CREATE TABLE theatre.contest (
 );
 CREATE TABLE theatre.understudy (
   id BIGSERIAL PRIMARY KEY NOT NULL UNIQUE,
-  first_name VARCHAR (20) NOT NULL,
-  last_name VARCHAR (50) NOT NULL,
-  date_of_birth DATE NOT NULL,
   actor_id BIGINT NOT NULL,
   FOREIGN KEY (actor_id) REFERENCES theatre.actor
-);
+) INHERITS (theatre.employee);
 CREATE TABLE theatre.role (
   role VARCHAR (50) PRIMARY KEY NOT NULL UNIQUE,
   actor_id BIGINT NOT NULL,
